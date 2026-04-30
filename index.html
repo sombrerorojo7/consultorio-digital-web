@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Consultorio Digital — Sistemas de Captación para Médicos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=Plus+Jakarta+Sans:wght@400..800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0b1929;--surface:#0f2035;--surface-2:#132844;--surface-3:#1a3358;
+  --border:rgba(255,255,255,0.08);--border-2:rgba(255,255,255,0.13);
+  --text:#e8f0f8;--text-muted:#7a9bbf;--text-faint:#3d5a78;
+  --accent:#f97316;--accent-hover:#ea6c0a;--accent-2:#22d3ee;--green:#22c55e;--purple:#a78bfa;
+  --font-display:"Plus Jakarta Sans",sans-serif;--font-body:"Inter",sans-serif;
+  --r-sm:6px;--r-md:10px;--r-lg:16px;--r-xl:24px;
+  --sh-md:0 4px 20px rgba(0,0,0,.35);--sh-lg:0 12px 40px rgba(0,0,0,.5);
+}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:clamp(.9rem,1vw + .4rem,1rem);line-height:1.65}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{font-family:var(--font-display);line-height:1.15;text-wrap:balance}
+p,li{text-wrap:pretty}
+button{cursor:pointer;font-family:var(--font-body)}
+input,textarea,select{font-family:var(--font-body)}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(11,25,41,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 clamp(1rem,4vw,3rem)}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:62px;gap:1rem}
+.nav-logo{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.nav-logo-text{font-family:var(--font-display);font-weight:700;font-size:.95rem;color:#fff}
+.nav-logo-text span{color:var(--accent-2)}
+.nav-links{display:flex;gap:1.5rem;list-style:none}
+.nav-links a{font-size:.82rem;color:var(--text-muted);transition:color 150ms}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{background:var(--accent);color:#fff;border:none;padding:8px 18px;border-radius:var(--r-sm);font-weight:600;font-size:.82rem;transition:background 150ms;white-space:nowrap}
+.nav-cta:hover{background:var(--accent-hover)}
+@media(max-width:640px){.nav-links{display:none}}
+
+/* HERO */
+.hero{padding:clamp(3rem,7vw,6rem) clamp(1rem,4vw,3rem) clamp(2rem,4vw,3.5rem);text-align:center;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 80% 55% at 50% 0%,rgba(249,115,22,.09) 0%,transparent 70%);pointer-events:none}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.28);color:var(--accent);font-size:.73rem;font-weight:700;padding:4px 13px;border-radius:999px;margin-bottom:1.25rem;letter-spacing:.05em;text-transform:uppercase}
+.hero-badge::before{content:"";width:6px;height:6px;background:var(--accent);border-radius:50%;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-size:clamp(2rem,5vw,3.8rem);font-weight:800;letter-spacing:-.03em;color:#fff;margin:0 auto 1.1rem;max-width:800px}
+.hero h1 span{color:var(--accent)}
+.hero p{font-size:clamp(.95rem,1.5vw,1.1rem);color:var(--text-muted);max-width:520px;margin:0 auto 1.75rem}
+.cta-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.btn-p{background:var(--accent);color:#fff;border:none;padding:13px 26px;border-radius:var(--r-md);font-weight:700;font-size:.9rem;transition:all 150ms;display:inline-flex;align-items:center;gap:7px;cursor:pointer}
+.btn-p:hover{background:var(--accent-hover);transform:translateY(-1px)}
+.btn-s{background:transparent;color:var(--text);border:1px solid var(--border-2);padding:13px 26px;border-radius:var(--r-md);font-weight:600;font-size:.9rem;transition:all 150ms;display:inline-flex;align-items:center;gap:7px}
+.btn-s:hover{background:rgba(255,255,255,.04)}
+.hero-stats{display:flex;flex-wrap:wrap;gap:2rem;justify-content:center;margin-top:2.5rem;padding-top:2.5rem;border-top:1px solid var(--border)}
+.stat{text-align:center}
+.stat-n{font-family:var(--font-display);font-size:1.7rem;font-weight:800;color:#fff}
+.stat-n em{color:var(--accent);font-style:normal}
+.stat-l{font-size:.72rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-top:1px}
+
+/* SECTION */
+.sec{padding:clamp(2.5rem,5vw,5rem) clamp(1rem,4vw,3rem)}
+.wrap{max-width:1200px;margin:0 auto}
+.sec-tag{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--accent);margin-bottom:.6rem;display:block}
+.sec-title{font-size:clamp(1.5rem,2.8vw,2.2rem);font-weight:800;letter-spacing:-.02em;color:#fff;margin-bottom:.6rem}
+.sec-sub{font-size:.95rem;color:var(--text-muted);max-width:500px}
+.alt-bg{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+
+/* PLANS */
+.plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:2rem}
+@media(max-width:900px){.plans-grid{grid-template-columns:1fr;max-width:480px;margin-left:auto;margin-right:auto}}
+.plan{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);display:flex;flex-direction:column;overflow:hidden;transition:transform 200ms,box-shadow 200ms;position:relative}
+.plan:hover{transform:translateY(-3px);box-shadow:var(--sh-lg)}
+.plan.featured{border-color:var(--accent)}
+.plan-badge{position:absolute;top:14px;right:14px;background:var(--accent);color:#fff;font-size:.62rem;font-weight:800;padding:3px 9px;border-radius:999px;letter-spacing:.06em}
+.plan-head{padding:1.6rem 1.6rem 0}
+.plan-tier{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.4rem}
+.t1{color:var(--accent-2)}.t2{color:var(--accent)}.t3{color:var(--purple)}
+.plan-name{font-size:1.2rem;font-weight:800;color:#fff;margin-bottom:.2rem}
+.plan-tagline{font-size:.82rem;color:var(--text-muted);margin-bottom:1.1rem;line-height:1.45}
+.plan-price-box{margin-bottom:1.1rem}
+.price-num{font-family:var(--font-display);font-size:2.4rem;font-weight:800;color:#fff;line-height:1}
+.price-period{font-size:.78rem;color:var(--text-muted);margin-top:3px}
+.price-renewal{font-size:.75rem;color:var(--text-faint);margin-top:4px}
+.price-renewal span{color:var(--green)}
+.plan-div{height:1px;background:var(--border);margin:0 1.6rem}
+.plan-body{padding:1.25rem 1.6rem;flex:1}
+.feat-group{margin-bottom:1rem}
+.feat-group-label{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--text-faint);margin-bottom:.5rem;padding-bottom:.3rem;border-bottom:1px solid var(--border)}
+.feat-list{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+.feat-list li{display:flex;gap:9px;align-items:flex-start;font-size:.83rem;line-height:1.4}
+.feat-list li.hi{color:var(--text)}
+.feat-list li.lo{color:var(--text-muted)}
+.fi{width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.6rem;margin-top:1px}
+.fi.y{background:rgba(34,197,94,.15);color:var(--green)}
+.fi.n{background:rgba(255,255,255,.05);color:var(--text-faint)}
+.plan-foot{padding:1.25rem 1.6rem 1.6rem}
+.btn-plan{width:100%;padding:12px;border-radius:var(--r-md);font-weight:700;font-size:.87rem;border:none;cursor:pointer;transition:all 150ms}
+.btn-plan-accent{background:var(--accent);color:#fff}
+.btn-plan-accent:hover{background:var(--accent-hover)}
+.btn-plan-ghost{background:transparent;color:var(--text);border:1px solid var(--border-2)}
+.btn-plan-ghost:hover{background:rgba(255,255,255,.04)}
+.plan-note{font-size:.7rem;color:var(--text-faint);text-align:center;margin-top:.65rem}
+
+/* TABLE */
+.tbl-wrap{overflow-x:auto;margin-top:1.75rem}
+table{width:100%;border-collapse:collapse;min-width:580px}
+th,td{padding:.8rem 1.1rem;text-align:left;border-bottom:1px solid var(--border);font-size:.83rem}
+th{font-weight:700;color:var(--text-muted);font-size:.72rem;text-transform:uppercase;letter-spacing:.05em}
+th.pc{text-align:center;color:#fff;font-size:.85rem;text-transform:none;letter-spacing:0}
+th.featured-c{color:var(--accent)}
+td{color:var(--text-muted)}
+td.fn{color:var(--text);font-weight:500}
+td.pc{text-align:center}
+tr:hover td{background:rgba(255,255,255,.02)}
+tr.grp td{background:var(--surface-2);font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-faint);padding:.45rem 1.1rem;border:none}
+.ci{color:var(--green)}.di{color:var(--text-faint)}
+
+/* TABS */
+.gen-tab-bar{display:flex;gap:4px;border-bottom:1px solid var(--border);margin-top:2rem}
+.gen-tab-btn{background:transparent;border:none;color:var(--text-muted);font-size:.83rem;font-weight:600;padding:10px 20px;border-radius:var(--r-sm) var(--r-sm) 0 0;display:flex;align-items:center;gap:7px;cursor:pointer;transition:all 150ms;border-bottom:2px solid transparent;margin-bottom:-1px}
+.gen-tab-btn:hover{color:var(--text);background:rgba(255,255,255,.04)}
+.gen-tab-btn.active{color:var(--accent-2);border-bottom-color:var(--accent-2);background:rgba(34,211,238,.06)}
+.gen-panel{display:block}
+.gen-panel.hidden{display:none}
+
+/* WHATSAPP PANEL */
+.proposal-section{background:linear-gradient(135deg,rgba(19,40,68,.8),rgba(15,32,53,.95));border:1px solid var(--border-2);border-radius:0 0 var(--r-xl) var(--r-xl);padding:clamp(1.5rem,3vw,2.5rem)}
+.proposal-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+@media(max-width:700px){.proposal-grid{grid-template-columns:1fr}}
+.field-group{display:flex;flex-direction:column;gap:.35rem}
+.field-label{font-size:.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em}
+.field-input{background:rgba(255,255,255,.04);border:1px solid var(--border-2);border-radius:var(--r-md);color:var(--text);padding:.65rem .9rem;font-size:.88rem;transition:border-color 150ms;width:100%}
+.field-input:focus{outline:none;border-color:var(--accent-2)}
+select.field-input option{background:#1a3358;color:var(--text)}
+.proposal-output{background:rgba(0,0,0,.25);border:1px solid var(--border);border-radius:var(--r-lg);padding:1.25rem 1.5rem;min-height:220px;font-size:.85rem;color:var(--text-muted);line-height:1.7;white-space:pre-wrap;font-family:monospace}
+.proposal-actions{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem;margin-top:1rem}
+.btn-copy{background:rgba(255,255,255,.06);color:var(--text-muted);border:1px solid var(--border-2);padding:9px 16px;border-radius:var(--r-md);font-size:.82rem;font-weight:600;display:flex;align-items:center;gap:6px;transition:all 150ms;cursor:pointer}
+.btn-copy:hover{background:rgba(255,255,255,.1);color:var(--text)}
+.btn-wa{background:#25d366;color:#fff;border:none;padding:9px 18px;border-radius:var(--r-md);font-size:.82rem;font-weight:700;display:flex;align-items:center;gap:6px;transition:background 150ms;cursor:pointer}
+.btn-wa:hover{background:#1fba59}
+.copied-msg{font-size:.78rem;color:var(--green);opacity:0;transition:opacity 200ms}
+.copied-msg.show{opacity:1}
+
+/* PDF BUILDER */
+.pdf-builder{display:grid;grid-template-columns:280px 1fr;background:rgba(0,0,0,.2);border:1px solid var(--border-2);border-radius:0 0 var(--r-xl) var(--r-xl);overflow:hidden;min-height:580px}
+@media(max-width:860px){.pdf-builder{grid-template-columns:1fr}}
+.pdf-sidebar{background:#0D1B3E;color:#fff;display:flex;flex-direction:column}
+.pdf-sidebar-header{background:#0a1530;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.08)}
+.pdf-sidebar-title{font-family:var(--font-display);font-size:1rem;color:#00AEEF;font-weight:700;margin-bottom:2px}
+.pdf-sidebar-sub{font-size:.68rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.08em}
+.pdf-sidebar-body{padding:16px 20px;flex:1;overflow-y:auto;max-height:500px}
+.pdf-field-group{margin-bottom:18px}
+.pdf-field-group-title{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#00AEEF;margin-bottom:10px;padding-bottom:5px;border-bottom:1px solid rgba(255,255,255,.08)}
+.pdf-field{margin-bottom:10px}
+.pdf-field label{display:block;font-size:.68rem;color:rgba(255,255,255,.5);font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px}
+.pdf-field input,.pdf-field select,.pdf-field textarea{width:100%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:5px;padding:7px 10px;color:#fff;font-family:var(--font-body);font-size:.78rem;transition:border-color .2s;outline:none;resize:vertical}
+.pdf-field input:focus,.pdf-field select:focus,.pdf-field textarea:focus{border-color:#00AEEF;background:rgba(0,174,239,.08)}
+.pdf-field select option{background:#1a2744;color:#fff}
+.pdf-toggle-row{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.04);border-radius:7px;padding:8px 12px;margin-bottom:8px}
+.pdf-toggle-label{font-size:.73rem;color:rgba(255,255,255,.7)}
+.pdf-toggle{position:relative;width:38px;height:20px;cursor:pointer;flex-shrink:0}
+.pdf-toggle input{opacity:0;width:0;height:0;position:absolute}
+.pdf-toggle-slider{position:absolute;inset:0;background:rgba(255,255,255,.15);border-radius:20px;transition:.3s;cursor:pointer}
+.pdf-toggle-slider::before{content:"";position:absolute;width:14px;height:14px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.3s}
+.pdf-toggle input:checked + .pdf-toggle-slider{background:#E07B2A}
+.pdf-toggle input:checked + .pdf-toggle-slider::before{transform:translateX(18px)}
+.pdf-sidebar-footer{padding:14px 20px;border-top:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;gap:8px}
+.btn-pdf-export{width:100%;background:#E07B2A;color:#fff;border:none;border-radius:7px;padding:11px;font-family:var(--font-display);font-size:.9rem;cursor:pointer;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:7px}
+.btn-pdf-export:hover{background:#c96a1e}
+.btn-pdf-print{width:100%;background:transparent;color:#00AEEF;border:1px solid rgba(0,174,239,.5);border-radius:7px;padding:8px;font-family:var(--font-body);font-size:.78rem;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:7px}
+.btn-pdf-print:hover{background:rgba(0,174,239,.1)}
+.pdf-preview-area{background:#E6F0F8;overflow:hidden;display:flex;flex-direction:column}
+.pdf-topbar{background:#1a2744;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;color:rgba(255,255,255,.6);font-size:.7rem;gap:10px;flex-shrink:0}
+.pdf-dot{width:7px;height:7px;border-radius:50%;background:#00AEEF;flex-shrink:0}
+.pdf-scroll{overflow-y:auto;padding:22px 16px;flex:1;max-height:560px}
+.propuesta{max-width:700px;margin:0 auto;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 4px 32px rgba(0,0,0,.15)}
+
+/* PROPUESTA VISUAL */
+.pv-topbar{background:#00AEEF;height:4px}
+.pv-header{background:#0D1B3E;position:relative}
+.pv-header-inner{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;padding:20px 26px}
+.pv-badge{display:inline-flex;align-items:center;background:#E07B2A;color:#fff;font-size:.58rem;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px}
+.pv-title{font-family:var(--font-display);font-size:1.45rem;color:#fff;line-height:1.1;font-weight:800;margin-bottom:4px}
+.pv-title .cyan{color:#00AEEF}
+.pv-subtitle{font-size:.75rem;color:rgba(184,208,244,.8);line-height:1.5}
+.pv-subtitle strong{color:#fff}
+.pv-strip{background:rgba(255,255,255,.05);border-top:1px solid rgba(255,255,255,.08);padding:8px 26px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.pv-strip-item{display:flex;align-items:center;gap:5px;font-size:.67rem;color:rgba(184,208,244,.75)}
+.pv-strip-dot{width:5px;height:5px;border-radius:50%;background:#00AEEF;flex-shrink:0}
+.pv-body{padding:22px 26px}
+.pv-section{margin-bottom:22px}
+.pv-section-label{font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#E07B2A;margin-bottom:3px}
+.pv-section-title{font-family:var(--font-display);font-size:1.25rem;color:#0D1B3E;font-weight:800;margin-bottom:4px}
+.pv-section-intro{font-size:.78rem;color:#718096;line-height:1.6}
+.pv-problema-list{list-style:none;display:grid;gap:6px;margin-top:10px}
+.pv-problema-list li{display:flex;align-items:flex-start;gap:10px;background:#F7FAFC;border:1px solid #E2E8F0;border-left:3px solid #E07B2A;border-radius:7px;padding:9px 12px;font-size:.75rem;line-height:1.5;color:#2D3748}
+.pv-num{font-family:var(--font-display);font-size:1.05rem;color:#E07B2A;line-height:1;flex-shrink:0}
+.pv-precios{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.pv-precio-card{background:#fff;border:1.5px solid #E6F4FC;border-top:3px solid #2176C7;border-radius:10px;padding:12px;text-align:center}
+.pv-precio-card.nar{border-top-color:#E07B2A}
+.pv-precio-label{font-size:.6rem;color:#718096;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:5px}
+.pv-precio-monto{font-family:var(--font-display);font-size:2rem;color:#0D1B3E;line-height:1;margin-bottom:3px}
+.pv-precio-nota{font-size:.65rem;color:#718096;margin-top:3px}
+.pv-incl-title{font-size:.65rem;font-weight:700;color:#718096;text-transform:uppercase;letter-spacing:.06em;margin:10px 0 6px}
+.pv-incluye{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.pv-check{display:flex;align-items:flex-start;gap:7px;font-size:.72rem;line-height:1.45;background:#F7FAFC;border:1px solid #E2E8F0;border-radius:5px;padding:6px 9px;color:#2D3748}
+.pv-check-ico{width:15px;height:15px;background:#059669;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.pv-check-ico::after{content:"";width:3px;height:6px;border:2px solid #fff;border-top:none;border-left:none;transform:rotate(45deg) translateY(-1px)}
+.pv-flujo{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;border-radius:9px;overflow:hidden;border:1px solid #E2E8F0;margin-top:10px}
+.pv-paso{padding:14px 12px}
+.pv-paso:nth-child(1){background:#E6F4FC}
+.pv-paso:nth-child(2){background:#0D1B3E}
+.pv-paso:nth-child(3){background:#FEF3E8;border-left:2px solid #E07B2A}
+.pv-paso-num{font-size:.58rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px;color:#718096}
+.pv-paso:nth-child(2) .pv-paso-num{color:#00AEEF}
+.pv-paso:nth-child(3) .pv-paso-num{color:#E07B2A}
+.pv-paso-titulo{font-family:var(--font-display);font-size:.88rem;color:#0D1B3E;line-height:1.2;margin-bottom:3px}
+.pv-paso:nth-child(2) .pv-paso-titulo{color:#fff}
+.pv-paso:nth-child(3) .pv-paso-titulo{color:#E07B2A}
+.pv-paso-desc{font-size:.67rem;color:#718096;line-height:1.5}
+.pv-paso:nth-child(2) .pv-paso-desc{color:rgba(184,208,244,.8)}
+.pv-oferta{background:#FEF3E8;border:2px solid #E07B2A;border-radius:10px;padding:14px 18px}
+.pv-oferta-titulo{font-family:var(--font-display);font-size:.95rem;color:#E07B2A;margin-bottom:5px}
+.pv-oferta-txt{font-size:.78rem;color:#2D3748;line-height:1.65}
+.pv-cta{background:#0D1B3E;border-radius:10px;padding:20px;text-align:center}
+.pv-cta-title{font-family:var(--font-display);font-size:1.2rem;color:#fff;margin-bottom:5px;line-height:1.15}
+.pv-cta-title .cyan{color:#00AEEF}
+.pv-cta-sub{font-size:.75rem;color:rgba(184,208,244,.8);margin-bottom:14px;line-height:1.55}
+.pv-contacto{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.08);border-radius:7px;overflow:hidden}
+.pv-ci{background:rgba(255,255,255,.05);padding:9px 5px;text-align:center}
+.pv-cl{font-size:.56rem;text-transform:uppercase;letter-spacing:.08em;color:#00AEEF;margin-bottom:2px;font-weight:600}
+.pv-cv{font-size:.69rem;color:#fff;font-weight:600}
+.pv-footer{background:#0D1B3E;padding:13px 26px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.pv-footer-txt{font-size:.6rem;color:rgba(255,255,255,.35);text-align:right;line-height:1.6}
+
+/* FAQ */
+.faq-list{margin-top:1.75rem;display:flex;flex-direction:column;gap:.5rem}
+.faq-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.faq-item.open{border-color:var(--border-2)}
+.faq-q{width:100%;background:none;border:none;color:var(--text);font-weight:600;font-size:.9rem;padding:1.1rem 1.4rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;text-align:left;cursor:pointer}
+.faq-ic{color:var(--accent);font-size:1.1rem;flex-shrink:0;transition:transform 200ms}
+.faq-item.open .faq-ic{transform:rotate(45deg)}
+.faq-a{padding:0 1.4rem 1.1rem;font-size:.85rem;color:var(--text-muted);line-height:1.7;display:none}
+.faq-item.open .faq-a{display:block}
+
+/* CTA FINAL */
+.cta-sec{padding:clamp(3rem,6vw,5rem) clamp(1rem,4vw,3rem);text-align:center}
+.cta-title{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;color:#fff;letter-spacing:-.02em;margin-bottom:.75rem}
+.cta-sub{color:var(--text-muted);margin:0 auto 1.75rem;max-width:460px;font-size:.95rem}
+.btn-wa-main{background:#25d366;color:#fff;border:none;padding:14px 28px;border-radius:var(--r-md);font-weight:700;font-size:.92rem;display:inline-flex;align-items:center;gap:10px;transition:all 150ms;cursor:pointer}
+.btn-wa-main:hover{background:#1fba59;transform:translateY(-1px)}
+
+/* FOOTER */
+footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem clamp(1rem,4vw,3rem)}
+.foot-inner{max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;gap:1.25rem;align-items:center;justify-content:space-between}
+.foot-brand{font-family:var(--font-display);font-weight:700;color:var(--text-muted);font-size:.88rem}
+.foot-links{display:flex;gap:1.25rem;list-style:none;flex-wrap:wrap}
+.foot-links a{font-size:.78rem;color:var(--text-faint);transition:color 130ms}
+.foot-links a:hover{color:var(--text-muted)}
+.foot-copy{font-size:.72rem;color:var(--text-faint);width:100%}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <img src="logo-fondo-negro-CD.png" alt="Consultorio Digital" style="height:40px;width:auto;mix-blend-mode:screen">
+    </div>
+    <ul class="nav-links">
+      <li><a href="#planes">Planes</a></li>
+      <li><a href="#comparar">Comparar</a></li>
+      <li><a href="#propuesta">Propuesta</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a href="https://wa.me/593983031058?text=Hola%2C+quiero+una+demo" target="_blank" rel="noopener" class="nav-cta">Demo Gratis →</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-badge">🚀 Sistemas digitales para médicos en Ecuador</div>
+  <h1>Tu consultorio, <span>captando pacientes</span> mientras trabajas</h1>
+  <p>Agendamiento online, historia clínica digital y presencia web profesional. Todo en un solo sistema.</p>
+  <div class="cta-row">
+    <button class="btn-p" onclick="window.open('https://wa.me/593983031058?text=Hola%2C+quiero+una+demo','_blank')">
+      Solicitar demo gratis
+    </button>
+    <a href="https://modo2.consultoriodigital.net" target="_blank" rel="noopener" class="btn-s">Ver sistema en vivo →</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-n"><em>24</em>/7</div><div class="stat-l">Captación automática</div></div>
+    <div class="stat"><div class="stat-n"><em>3</em> min</div><div class="stat-l">Para agendar una cita</div></div>
+    <div class="stat"><div class="stat-n"><em>100%</em></div><div class="stat-l">En la nube</div></div>
+    <div class="stat"><div class="stat-n"><em>20</em>-30d</div><div class="stat-l">Implementación</div></div>
+  </div>
+</section>
+
+<!-- PLANES -->
+<section class="sec alt-bg" id="planes">
+  <div class="wrap">
+    <span class="sec-tag">Planes</span>
+    <h2 class="sec-title">Elige tu sistema digital</h2>
+    <p class="sec-sub">Desde una landing de captación hasta un sistema clínico completo con múltiples médicos.</p>
+    <div class="plans-grid">
+      <div class="plan">
+        <div class="plan-head">
+          <div class="plan-tier t1">Plan Inicio</div>
+          <div class="plan-name">Captación Digital</div>
+          <div class="plan-tagline">Para iniciar con presencia profesional y captar tus primeros pacientes online.</div>
+          <div class="plan-price-box">
+            <div class="price-num">$349<small style="font-size:1rem">.99</small></div>
+            <div class="price-period">Setup único · pago único</div>
+            <div class="price-renewal">Año 2+: <span>$100/año</span> hosting y dominio</div>
+          </div>
+        </div>
+        <div class="plan-div"></div>
+        <div class="plan-body">
+          <div class="feat-group">
+            <div class="feat-group-label">Presencia Web</div>
+            <ul class="feat-list">
+              <li class="hi"><span class="fi y">✓</span> Landing page profesional (subdominio)</li>
+              <li class="hi"><span class="fi y">✓</span> Perfil médico + servicios + contacto</li>
+              <li class="hi"><span class="fi y">✓</span> Botón directo a WhatsApp</li>
+              <li class="lo"><span class="fi n">—</span> Dominio propio</li>
+            </ul>
+          </div>
+          <div class="feat-group">
+            <div class="feat-group-label">Sistema Médico</div>
+            <ul class="feat-list">
+              <li class="hi"><span class="fi y">✓</span> Agendamiento online 24/7</li>
+              <li class="hi"><span class="fi y">✓</span> Historia clínica básica (EHR)</li>
+              <li class="hi"><span class="fi y">✓</span> Notificaciones por email</li>
+              <li class="lo"><span class="fi n">—</span> Multi-clínica / Recepcionista</li>
+            </ul>
+          </div>
+        </div>
+        <div class="plan-foot">
+          <button class="btn-plan btn-plan-ghost" onclick="selectPlan('captacion')">Generar propuesta →</button>
+          <div class="plan-note">Implementación: 7 días hábiles</div>
+        </div>
+      </div>
+
+      <div class="plan featured">
+        <div class="plan-badge">MÁS VENDIDO</div>
+        <div class="plan-head">
+          <div class="plan-tier t2">Plan Crecimiento</div>
+          <div class="plan-name">Digital Pro</div>
+          <div class="plan-tagline">Sitio web completo + sistema de gestión para consultorios y clínicas.</div>
+          <div class="plan-price-box">
+            <div class="price-num">$690</div>
+            <div class="price-period">Setup único · pago único</div>
+            <div class="price-renewal">Año 2+: <span>$200/año</span> hosting y dominio</div>
+          </div>
+        </div>
+        <div class="plan-div"></div>
+        <div class="plan-body">
+          <div class="feat-group">
+            <div class="feat-group-label">Presencia Web</div>
+            <ul class="feat-list">
+              <li class="hi"><span class="fi y">✓</span> Sitio web completo + dominio propio</li>
+              <li class="hi"><span class="fi y">✓</span> SEO optimizado + mapa de ubicación</li>
+              <li class="hi"><span class="fi y">✓</span> Correos corporativos base</li>
+            </ul>
+          </div>
+          <div class="feat-group">
+            <div class="feat-group-label">Sistema Médico</div>
+            <ul class="feat-list">
+              <li class="hi"><span class="fi y">✓</span> Agenda completa + recordatorios</li>
+              <li class="hi"><span class="fi y">✓</span> Historia clínica completa (EHR)</li>
+              <li class="hi"><span class="fi y">✓</span> WhatsApp + SMS (Twilio)</li>
+              <li class="hi"><span class="fi y">✓</span> Multi-clínica + recepcionista</li>
+              <li class="hi"><span class="fi y">✓</span> Cobro online (WooCommerce)</li>
+            </ul>
+          </div>
+        </div>
+        <div class="plan-foot">
+          <button class="btn-plan btn-plan-accent" onclick="selectPlan('pro')">Generar propuesta →</button>
+          <div class="plan-note">Implementación: 7–15 días hábiles</div>
+        </div>
+      </div>
+
+      <div class="plan">
+        <div class="plan-head">
+          <div class="plan-tier t3">Plan Automatización</div>
+          <div class="plan-name">Clínica Pro</div>
+          <div class="plan-tagline">Para clínicas con múltiples especialidades, médicos y necesidades institucionales.</div>
+          <div class="plan-price-box">
+            <div class="price-num">$899<small style="font-size:1rem">.99</small></div>
+            <div class="price-period">Setup único · pago único</div>
+            <div class="price-renewal">Año 2+: <span>$250/año</span> hosting y dominio</div>
+          </div>
+        </div>
+        <div class="plan-div"></div>
+        <div class="plan-body">
+          <div class="feat-group">
+            <div class="feat-group-label">Todo del Plan Digital Pro +</div>
+            <ul class="feat-list">
+              <li class="hi"><span class="fi y">✓</span> Sitio institucional + landing captación</li>
+              <li class="hi"><span class="fi y">✓</span> Seguridad avanzada (SSL, anti-malware)</li>
+              <li class="hi"><span class="fi y">✓</span> Hasta 20 médicos configurados</li>
+              <li class="hi"><span class="fi y">✓</span> Historia clínica por especialidad</li>
+              <li class="hi"><span class="fi y">✓</span> Telemedicina (videoconsultas)</li>
+              <li class="hi"><span class="fi y">✓</span> Capacitación del equipo incluida</li>
+            </ul>
+          </div>
+        </div>
+        <div class="plan-foot">
+          <button class="btn-plan btn-plan-ghost" onclick="selectPlan('clinica')">Generar propuesta →</button>
+          <div class="plan-note">Implementación: 20–30 días hábiles</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARAR -->
+<section class="sec" id="comparar">
+  <div class="wrap">
+    <span class="sec-tag">Comparativa</span>
+    <h2 class="sec-title">¿Qué incluye cada plan?</h2>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th style="width:42%">Característica</th>
+            <th class="pc">Captación<br><small style="color:var(--accent-2)">$349.99</small></th>
+            <th class="pc featured-c">Digital Pro<br><small>$690</small></th>
+            <th class="pc">Clínica Pro<br><small style="color:var(--purple)">$899.99</small></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="grp"><td colspan="4">Presencia Web</td></tr>
+          <tr><td class="fn">Sitio web profesional</td><td class="pc"><span class="ci">✓</span></td><td class="pc"><span class="ci">✓</span></td><td class="pc"><span class="ci">✓</span></td></tr>
+          <tr><td class="fn">Dominio propio</td><td class="pc"><span class="di">—</span></td><td class="pc"><span class="ci">✓</span></td><td class="pc"><span class="ci">✓</span></td></tr>
+          <tr><td class="fn">SEO optimizado</td><td class="pc"><span class="di">Básico</span></td><td class="pc"><span class="ci">✓</span></td><td class="pc"><span class="ci">✓</span></td></tr>
+          <tr><td class="fn">Correos corporativos</td><td class="pc"><span class="di">—</span></td><td class="pc"><span class="ci">✓</span></td><td class="pc"><span class="ci">✓</span></td></tr>
+          <tr><td class="fn">Seguridad web avanzada</td><td class="pc"><span class="di">—</span></td><td class="pc"><span class="di">—</span></td><td class="pc"><span class="ci">✓</span></td></tr>
+          <tr class="grp"><td colspan="4">Sistema Médico</td></tr>
+          <tr><td class="fn">Agendamiento online</td><td class="pc"><span class="ci">✓</span></td><td class="pc"><span class="ci">✓</span></td><td class="pc"><span class="ci">✓</span></td></tr>
+          <tr><td class="fn">Historia clínica (EHR)</td><td class="pc"><span class="di">Básica</span></td><td class="pc"><span class="ci">Completa</span></td><td class="pc"><span class="ci">Por especialidad</span></td></tr>
+          <tr><td class="fn">Recordatorios automáticos</td><td class="pc"><span class="di">Email</span></td><td class="pc"><span class="ci">WhatsApp+Email</span></td><td class="pc"><span class="ci">✓</span></td></tr>
+          <tr><td class="fn">Multi-clínica + recepcionista</td><td class="pc"><span class="di">—</span></td><td class="pc"><span class="ci">✓</span></td><td class="pc"><span class="ci">✓</span></td></tr>
+          <tr><td class="fn">Telemedicina</td><td class="pc"><span class="di">—</span></td><td class="pc"><span class="di">—</span></td><td class="pc"><span class="ci">✓</span></td></tr>
+          <tr><td class="fn">Cobro online</td><td class="pc"><span class="di">—</span></td><td class="pc"><span class="ci">✓</span></td><td class="pc"><span class="ci">✓</span></td></tr>
+          <tr><td class="fn">Hasta 20 médicos</td><td class="pc"><span class="di">—</span></td><td class="pc"><span class="di">—</span></td><td class="pc"><span class="ci">✓</span></td></tr>
+          <tr><td class="fn">Capacitación incluida</td><td class="pc"><span class="di">—</span></td><td class="pc"><span class="di">—</span></td><td class="pc"><span class="ci">✓</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- GENERADOR -->
+<section class="sec alt-bg" id="propuesta">
+  <div class="wrap">
+    <span class="sec-tag">Herramienta Interna</span>
+    <h2 class="sec-title">Generador de Propuestas</h2>
+    <p class="sec-sub">Elige el formato: mensaje rápido para WhatsApp, propuesta visual (PDF) o archivo HTML interactivo listo para enviar por correo o enlace.</p>
+
+    <div class="gen-tab-bar">
+      <button class="gen-tab-btn active" id="tab-wa" onclick="switchTab('wa')">
+        📱 Propuesta para WhatsApp
+      </button>
+      <button class="gen-tab-btn" id="tab-pdf" onclick="switchTab('pdf')">
+        📄 Propuesta Visual (PDF)
+      </button>
+      <button class="gen-tab-btn" id="tab-html" onclick="switchTab('html')">
+        🌐 Propuesta HTML
+      </button>
+    </div>
+
+    <!-- PANEL WHATSAPP -->
+    <div class="gen-panel" id="panel-wa">
+      <div class="proposal-section">
+        <div class="proposal-grid">
+          <div class="field-group">
+            <label class="field-label">Nombre del prospecto</label>
+            <input type="text" class="field-input" id="pro-name" placeholder="Dr. Enrique Villa" oninput="generateProposal()">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Especialidad / Tipo</label>
+            <input type="text" class="field-input" id="pro-esp" placeholder="Traumatólogo / Clínica" oninput="generateProposal()">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Ciudad</label>
+            <input type="text" class="field-input" id="pro-city" placeholder="Cuenca" oninput="generateProposal()">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Plan seleccionado</label>
+            <select class="field-input" id="pro-plan" onchange="generateProposal()">
+              <option value="captacion">Plan Captación Digital — $349.99</option>
+              <option value="pro" selected>Plan Digital Pro — $690</option>
+              <option value="clinica">Plan Clínica Pro — $899.99</option>
+              <option value="clinico">Plan Clínico Profesional — $2,130</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Fecha de la propuesta</label>
+            <input type="date" class="field-input" id="pro-date" oninput="generateProposal()">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Observación adicional (opcional)</label>
+            <input type="text" class="field-input" id="pro-obs" placeholder="Incluye capacitación al equipo..." oninput="generateProposal()">
+          </div>
+        </div>
+        <div style="margin-top:1.5rem">
+          <div class="field-label" style="margin-bottom:.6rem">Vista previa del mensaje</div>
+          <div class="proposal-output" id="pro-output">Completa los campos arriba para generar el mensaje...</div>
+          <div class="proposal-actions">
+            <button class="btn-copy" onclick="copyProposal()">📋 Copiar mensaje</button>
+            <button class="btn-wa" onclick="sendWA()">💬 Enviar por WhatsApp</button>
+            <span class="copied-msg" id="copied-ok">✓ Copiado al portapapeles</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL PDF -->
+    <div class="gen-panel hidden" id="panel-pdf">
+      <div class="pdf-builder">
+        <div class="pdf-sidebar">
+          <div class="pdf-sidebar-header">
+            <div class="pdf-sidebar-title">Datos de la propuesta</div>
+            <div class="pdf-sidebar-sub">Se actualiza en tiempo real</div>
+          </div>
+          <div class="pdf-sidebar-body">
+            <div class="pdf-field-group">
+              <div class="pdf-field-group-title">Cliente</div>
+              <div class="pdf-field"><label>Nombre / Título</label><input type="text" id="pdf-name" placeholder="Dr. Enrique Villa" oninput="updatePDF()"></div>
+              <div class="pdf-field"><label>Especialidad</label><input type="text" id="pdf-esp" placeholder="Traumatología" oninput="updatePDF()"></div>
+              <div class="pdf-field"><label>Ciudad / País</label><input type="text" id="pdf-city" placeholder="Cuenca, Ecuador" oninput="updatePDF()"></div>
+              <div class="pdf-field"><label>Cotización N°</label><input type="text" id="pdf-num" placeholder="413" oninput="updatePDF()"></div>
+              <div class="pdf-field"><label>Fecha</label><input type="date" id="pdf-date" oninput="updatePDF()"></div>
+            </div>
+            <div class="pdf-field-group">
+              <div class="pdf-field-group-title">Plan</div>
+              <div class="pdf-field">
+                <label>Plan seleccionado</label>
+                <select id="pdf-plan" onchange="updatePDF()">
+                  <option value="captacion">Plan Captación Digital — $349.99</option>
+                  <option value="pro" selected>Plan Digital Pro — $690</option>
+                  <option value="clinica">Plan Clínica Pro — $899.99</option>
+                  <option value="clinico">Plan Clínico Profesional — $2,130</option>
+                </select>
+              </div>
+              <div class="pdf-field"><label>Precio especial (opcional)</label><input type="text" id="pdf-desc" placeholder="Ej: $650 (promo abril)" oninput="updatePDF()"></div>
+              <div class="pdf-field"><label>Nota adicional</label><textarea id="pdf-nota" rows="3" placeholder="Ej: Incluye soporte 30 días..." oninput="updatePDF()"></textarea></div>
+            </div>
+            <div class="pdf-field-group">
+              <div class="pdf-field-group-title">Opciones</div>
+              <div class="pdf-toggle-row">
+                <span class="pdf-toggle-label">Mostrar precios</span>
+                <label class="pdf-toggle"><input type="checkbox" id="pdf-show-prices" checked onchange="updatePDF()"><span class="pdf-toggle-slider"></span></label>
+              </div>
+              <div class="pdf-toggle-row">
+                <span class="pdf-toggle-label">Mostrar "¿Por qué ahora?"</span>
+                <label class="pdf-toggle"><input type="checkbox" id="pdf-show-why" checked onchange="updatePDF()"><span class="pdf-toggle-slider"></span></label>
+              </div>
+              <div class="pdf-toggle-row">
+                <span class="pdf-toggle-label">Mostrar flujo de trabajo</span>
+                <label class="pdf-toggle"><input type="checkbox" id="pdf-show-flow" checked onchange="updatePDF()"><span class="pdf-toggle-slider"></span></label>
+              </div>
+            </div>
+          </div>
+          <div class="pdf-sidebar-footer">
+            <button class="btn-pdf-print" onclick="window.print()">🖨 Imprimir / Guardar PDF</button>
+            <button class="btn-pdf-export" onclick="exportPDF()">⬇ Exportar PDF</button>
+          </div>
+        </div>
+        <div class="pdf-preview-area">
+          <div class="pdf-topbar">
+            <div style="display:flex;align-items:center;gap:6px"><div class="pdf-dot"></div><span>Vista previa en tiempo real</span></div>
+            <span id="pdf-cotizacion-label">Cotización #413</span>
+          </div>
+          <div class="pdf-scroll">
+            <div class="propuesta" id="propuesta-preview">
+              <!-- Se llena con JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- PANEL HTML -->
+    <div id="panel-html" class="hidden">
+      <div style="display:grid;grid-template-columns:280px 1fr;gap:0;border:1px solid var(--border);border-radius:var(--r-md);overflow:hidden;background:#0a1530;">
+        <div style="background:#0a1530;border-right:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;">
+          <div class="pdf-sidebar-header">
+            <div class="pdf-sidebar-title">Propuesta HTML</div>
+            <div class="pdf-sidebar-sub">Archivo interactivo para compartir</div>
+          </div>
+          <div class="pdf-sidebar-body">
+            <div class="pdf-field-group">
+              <div class="pdf-field-group-title">Datos del prospecto</div>
+              <div class="pdf-field"><label>Nombre / Título</label><input type="text" id="html-name" placeholder="Dr. Enrique Villa" oninput="updateHTML()"></div>
+              <div class="pdf-field"><label>Especialidad</label><input type="text" id="html-esp" placeholder="Traumatología" oninput="updateHTML()"></div>
+              <div class="pdf-field"><label>Ciudad / País</label><input type="text" id="html-city" placeholder="Cuenca, Ecuador" oninput="updateHTML()"></div>
+              <div class="pdf-field"><label>Email del prospecto</label><input type="text" id="html-email" placeholder="doctor@email.com" oninput="updateHTML()"></div>
+            </div>
+            <div class="pdf-field-group">
+              <div class="pdf-field-group-title">Propuesta</div>
+              <div class="pdf-field"><label>Cotización N°</label><input type="text" id="html-num" placeholder="413" oninput="updateHTML()"></div>
+              <div class="pdf-field"><label>Fecha</label><input type="date" id="html-date" oninput="updateHTML()"></div>
+              <div class="pdf-field"><label>Plan</label>
+                <select id="html-plan" onchange="updateHTML()">
+                  <option value="inicio">Plan Inicio — $349.99</option>
+                  <option value="crecimiento">Plan Crecimiento — $379.99</option>
+                  <option value="automatizacion">Plan Automatización — $899.99</option>
+                </select>
+              </div>
+              <div class="pdf-field"><label>Precio especial (opcional)</label><input type="text" id="html-desc" placeholder="Ej: $650 promo" oninput="updateHTML()"></div>
+              <div class="pdf-field"><label>Nota adicional</label><textarea id="html-nota" rows="3" placeholder="Ej: Incluye soporte 30 días..." oninput="updateHTML()"></textarea></div>
+            </div>
+          </div>
+          <div class="pdf-sidebar-footer">
+            <button class="btn-pdf-export" onclick="downloadHTML()">⬇ Descargar HTML</button>
+            <button class="btn-pdf-print" onclick="previewHTMLNewTab()">🔗 Abrir en nueva pestaña</button>
+          </div>
+        </div>
+        <div style="background:#E6F0F8;display:flex;flex-direction:column;">
+          <div class="pdf-topbar">
+            <div style="display:flex;align-items:center;gap:6px"><div class="pdf-dot"></div><span>Vista previa en tiempo real</span></div>
+            <span id="html-cotizacion-label">Cotización #413</span>
+          </div>
+          <div style="overflow-y:auto;padding:22px 16px;flex:1;max-height:560px;">
+            <iframe id="html-preview-frame" style="width:100%;height:520px;border:none;border-radius:8px;background:#fff;" sandbox="allow-same-origin allow-scripts"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec" id="faq">
+  <div class="wrap">
+    <span class="sec-tag">Preguntas Frecuentes</span>
+    <h2 class="sec-title">Preguntas frecuentes</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Cuánto tiempo tarda la implementación?<span class="faq-ic">+</span></button>
+        <div class="faq-a">Plan Captación: 7 días hábiles. Plan Digital Pro: 7–15 días. Plan Clínica Pro: 20–30 días. Los tiempos inician desde la aprobación, pago del anticipo y entrega de información por parte del cliente.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Qué pasa después del primer año?<span class="faq-ic">+</span></button>
+        <div class="faq-a">El costo anual de renovación cubre hosting, dominio y mantenimiento básico: $100/año (Plan Captación), $200/año (Plan Digital Pro) y $250/año (Plan Clínica Pro). No hay costos ocultos.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Puedo empezar con el Plan Captación y subir de plan después?<span class="faq-ic">+</span></button>
+        <div class="faq-a">Sí, 100%. El sistema está diseñado para crecer. Puedes iniciar con captación básica y migrar al Plan Digital Pro o Clínica Pro cuando lo necesites, pagando solo la diferencia de configuración.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Qué tecnología usan?<span class="faq-ic">+</span></button>
+        <div class="faq-a">WordPress + Elementor para el sitio web. KiviCare EHR para el sistema médico, agendamiento y telemedicina. WooCommerce para cobros online. Todo hospedado en servidores con SSL incluido.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Funciona para médicos fuera de Ecuador?<span class="faq-ic">+</span></button>
+        <div class="faq-a">Sí. El sistema funciona para cualquier país de Latinoamérica. Los pagos online dependerán de la pasarela disponible en el país del cliente (PayPal, Stripe, PayPhone, etc.).</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-sec">
+  <div class="wrap">
+    <h2 class="cta-title">¿Listo para digitalizar tu consultorio?</h2>
+    <p class="cta-sub">Conversemos por WhatsApp. Te explicamos cuál plan se adapta mejor a tu situación.</p>
+    <button class="btn-wa-main" onclick="window.open('https://wa.me/593983031058?text=Hola%2C+quiero+información+sobre+Consultorio+Digital','_blank')">
+      💬 Escribir por WhatsApp
+    </button>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-inner">
+    <div class="foot-brand"><img src="logo-fondo-negro-CD.png" alt="Consultorio Digital" style="height:28px;width:auto;mix-blend-mode:screen;opacity:.85"></div>
+    <ul class="foot-links">
+      <li><a href="https://consultoriodigital.net" target="_blank" rel="noopener">consultoriodigital.net</a></li>
+      <li><a href="mailto:admin@consultoriodigital.net">admin@consultoriodigital.net</a></li>
+      <li><a href="tel:+593983031058">+593 98 303 1058</a></li>
+    </ul>
+    <div class="foot-copy">© 2026 Consultorio Digital · Cuenca, Ecuador · Mgt. Rommel Mora · RUC: 0103838264001</div>
+  </div>
+</footer>
+
+<script>
+// ─── DATOS DE PLANES ───────────────────────────────────────────────
+const PLANES = {
+  captacion: {
+    nombre: 'Plan Captación Digital',
+    precio: '$349.99',
+    renovacion: '$100/año',
+    tiempo: '7 días hábiles',
+    incluye: [
+      'Landing page profesional (subdominio)',
+      'Perfil médico + servicios + contacto',
+      'Botón directo a WhatsApp',
+      'Diseño responsive móvil/escritorio',
+      'Agendamiento online 24/7',
+      'Historia clínica básica (EHR)',
+      'Notificaciones por email',
+    ],
+    no_incluye: ['Dominio propio', 'Multi-clínica', 'Telemedicina', 'Cobro online'],
+    precio2: '$780',
+    precio2_label: 'Setup',
+    precio_renovacion: '$100'
+  },
+  pro: {
+    nombre: 'Plan Digital Pro',
+    precio: '$690',
+    renovacion: '$200/año',
+    tiempo: '7–15 días hábiles',
+    incluye: [
+      'Sitio web completo con dominio propio',
+      'SEO optimizado + mapa de ubicación',
+      'Correos corporativos base',
+      'Agendamiento online con recordatorios',
+      'Historia clínica completa (EHR)',
+      'Recordatorios por WhatsApp y email',
+      'Múltiples clínicas + recepcionista',
+      'Cobro online (WooCommerce)',
+      'Reportes y estadísticas',
+    ],
+    no_incluye: ['Telemedicina', 'Historia clínica por especialidad'],
+    precio2: '$690',
+    precio2_label: 'Todo incluido',
+    precio_renovacion: '$200'
+  },
+  clinica: {
+    nombre: 'Plan Clínica Pro',
+    precio: '$899.99',
+    renovacion: '$250/año',
+    tiempo: '20–30 días hábiles',
+    incluye: [
+      'Sitio institucional + landing de captación',
+      'Dominio propio + correos corporativos',
+      'Seguridad avanzada (SSL, anti-malware)',
+      'Hasta 20 médicos configurados',
+      'Historia clínica por especialidad',
+      'Telemedicina (videoconsultas)',
+      'Cobro online + reportes avanzados',
+      'Capacitación del equipo incluida',
+    ],
+    no_incluye: [],
+    precio2: '$899.99',
+    precio2_label: 'Todo incluido',
+    precio_renovacion: '$250'
+  },
+  clinico: {
+    nombre: 'Plan Clínico Profesional',
+    precio: '$2,130',
+    renovacion: '$250/año',
+    tiempo: '20–30 días hábiles',
+    incluye: [
+      'Sistema clínico multiusuario completo',
+      'Sitio web institucional',
+      'Seguridad web y protección operativa',
+      'Configuración de cobro online',
+      'Capacitación y puesta en marcha',
+      'Hasta 20 médicos + especialidades',
+    ],
+    no_incluye: [],
+    precio2: '$2,130',
+    precio2_label: 'Proyecto completo',
+    precio_renovacion: '$250'
+  }
+};
+
+// ─── TAB SWITCHING ─────────────────────────────────────────────────
+function switchTab(tab) {
+  ['wa','pdf','html'].forEach(t => {
+    document.getElementById('panel-'+t).classList.toggle('hidden', tab !== t);
+    document.getElementById('tab-'+t).classList.toggle('active', tab === t);
+  });
+  if (tab === 'pdf') updatePDF();
+  if (tab === 'html') { updateHTML(); }
+}
+
+// ─── WHATSAPP GENERATOR ─────────────────────────────────────────────
+function generateProposal() {
+  const name = document.getElementById('pro-name').value.trim();
+  const esp = document.getElementById('pro-esp').value.trim();
+  const city = document.getElementById('pro-city').value.trim();
+  const planKey = document.getElementById('pro-plan').value;
+  const dateVal = document.getElementById('pro-date').value;
+  const obs = document.getElementById('pro-obs').value.trim();
+
+  if (!name) {
+    document.getElementById('pro-output').textContent = 'Completa los campos arriba para generar el mensaje...';
+    return;
+  }
+
+  const plan = PLANES[planKey];
+  const fecha = dateVal ? new Date(dateVal + 'T12:00:00').toLocaleDateString('es-EC', {day:'2-digit',month:'long',year:'numeric'}) : new Date().toLocaleDateString('es-EC', {day:'2-digit',month:'long',year:'numeric'});
+
+  let msg = `Estimado/a *${name}*`;
+  if (esp) msg += ` — ${esp}`;
+  msg += `\n\n`;
+  msg += `Es un gusto saludarle. A continuación le presento la propuesta de *Consultorio Digital* preparada especialmente para su práctica${city ? ' en ' + city : ''}.`;
+  msg += `\n\n`;
+  msg += `📋 *PROPUESTA: ${plan.nombre.toUpperCase()}*\n`;
+  msg += `📅 Fecha: ${fecha}\n`;
+  msg += `\n`;
+  msg += `💰 *Inversión: ${plan.precio}* (pago único)\n`;
+  msg += `🔄 Renovación año 2+: ${plan.renovacion} (hosting, dominio y mantenimiento)\n`;
+  msg += `⏱ Tiempo de implementación: ${plan.tiempo}\n`;
+  msg += `\n`;
+  msg += `✅ *INCLUYE:*\n`;
+  plan.incluye.forEach(item => { msg += `• ${item}\n`; });
+  if (obs) {
+    msg += `\n📌 *Nota adicional:*\n${obs}\n`;
+  }
+  msg += `\n`;
+  msg += `💳 *Forma de pago:*\n`;
+  msg += `• 70% de anticipo al inicio del proyecto\n`;
+  msg += `• 30% contra entrega\n`;
+  msg += `\n`;
+  msg += `Estamos a su disposición para cualquier consulta. ¿Le gustaría coordinar una llamada o demo del sistema?\n`;
+  msg += `\n`;
+  msg += `Atentamente,\n*Mgt. Rommel Mora*\nConsultorio Digital\n📞 +593 98 303 1058\n🌐 consultoriodigital.net`;
+
+  document.getElementById('pro-output').textContent = msg;
+}
+
+function copyProposal() {
+  const txt = document.getElementById('pro-output').textContent;
+  if (!txt || txt.startsWith('Completa')) return;
+  navigator.clipboard.writeText(txt).then(() => {
+    const el = document.getElementById('copied-ok');
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 2500);
+  });
+}
+
+function sendWA() {
+  const txt = document.getElementById('pro-output').textContent;
+  if (!txt || txt.startsWith('Completa')) { alert('Primero completa el nombre del prospecto.'); return; }
+  const encoded = encodeURIComponent(txt);
+  window.open('https://wa.me/?text=' + encoded, '_blank');
+}
+
+function selectPlan(planKey) {
+  document.getElementById('pro-plan').value = planKey;
+  document.getElementById('pdf-plan').value = planKey;
+  document.getElementById('html-plan').value = planKey;
+  generateProposal();
+  updatePDF();
+  updateHTML();
+  const el = document.getElementById('propuesta');
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ─── PDF PREVIEW ───────────────────────────────────────────────────
+function updatePDF() {
+  const name = document.getElementById('pdf-name').value || 'Dr. [Nombre]';
+  const esp = document.getElementById('pdf-esp').value || 'Especialidad';
+  const city = document.getElementById('pdf-city').value || 'Ciudad, Ecuador';
+  const num = document.getElementById('pdf-num').value || '413';
+  const dateVal = document.getElementById('pdf-date').value;
+  const planKey = document.getElementById('pdf-plan').value;
+  const descPrecio = document.getElementById('pdf-desc').value;
+  const nota = document.getElementById('pdf-nota').value;
+  const showPrices = document.getElementById('pdf-show-prices').checked;
+  const showWhy = document.getElementById('pdf-show-why').checked;
+  const showFlow = document.getElementById('pdf-show-flow').checked;
+
+  const plan = PLANES[planKey];
+  const fecha = dateVal ? new Date(dateVal + 'T12:00:00').toLocaleDateString('es-EC',{day:'2-digit',month:'long',year:'numeric'}) : new Date().toLocaleDateString('es-EC',{day:'2-digit',month:'long',year:'numeric'});
+  const precioFinal = descPrecio || plan.precio;
+
+  document.getElementById('pdf-cotizacion-label').textContent = `Cotización #${num}`;
+
+  const incluyeHTML = plan.incluye.map(i => `<div class="pv-check"><div class="pv-check-ico"></div><span>${i}</span></div>`).join('');
+
+  const whySec = showWhy ? `
+    <div class="pv-section">
+      <div class="pv-section-label">Por qué ahora</div>
+      <div class="pv-section-title">Los pacientes buscan médicos en Google</div>
+      <ul class="pv-problema-list">
+        <li><span class="pv-num">1</span><span>Más del <strong>70%</strong> de pacientes busca especialistas en internet antes de llamar</span></li>
+        <li><span class="pv-num">2</span><span>Sin agendamiento online, pierdes pacientes que reservan a cualquier hora del día</span></li>
+        <li><span class="pv-num">3</span><span>La competencia ya tiene sistema digital — diferenciarse hoy cuesta menos que recuperar terreno mañana</span></li>
+      </ul>
+    </div>` : '';
+
+  const precioSec = showPrices ? `
+    <div class="pv-section">
+      <div class="pv-section-label">Inversión</div>
+      <div class="pv-section-title">Propuesta económica</div>
+      <div class="pv-precios">
+        <div class="pv-precio-card">
+          <div class="pv-precio-label">Inversión inicial</div>
+          <div class="pv-precio-monto"><small>$</small>${precioFinal.replace('$','')}</div>
+          <div class="pv-precio-nota">Pago único · ${plan.tiempo}</div>
+        </div>
+        <div class="pv-precio-card nar">
+          <div class="pv-precio-label">Renovación anual (año 2+)</div>
+          <div class="pv-precio-monto"><small>$</small>${plan.precio_renovacion.replace('$','')}</div>
+          <div class="pv-precio-nota">Hosting, dominio y mantenimiento</div>
+        </div>
+      </div>
+      <p style="font-size:.72rem;color:#718096;margin-top:8px;line-height:1.6">Forma de pago: <strong>70% anticipo</strong> para iniciar · <strong>30% contra entrega</strong>. Precios válidos por 15 días.</p>
+    </div>` : '';
+
+  const flowSec = showFlow ? `
+    <div class="pv-section">
+      <div class="pv-section-label">Proceso de trabajo</div>
+      <div class="pv-section-title">¿Cómo funciona?</div>
+      <div class="pv-flujo">
+        <div class="pv-paso"><div class="pv-paso-num">Paso 01</div><div class="pv-paso-titulo">Aprobación y anticipo</div><div class="pv-paso-desc">Aprueba la propuesta, realiza el 70% de anticipo y entrega la información requerida.</div></div>
+        <div class="pv-paso"><div class="pv-paso-num">Paso 02</div><div class="pv-paso-titulo">Implementación</div><div class="pv-paso-desc">Configuramos el sistema, sitio web y todas las integraciones en ${plan.tiempo}.</div></div>
+        <div class="pv-paso"><div class="pv-paso-num">Paso 03</div><div class="pv-paso-titulo">Entrega y activación</div><div class="pv-paso-desc">Revisión final, pago del 30% restante y lanzamiento oficial de su sistema digital.</div></div>
+      </div>
+    </div>` : '';
+
+  const notaSec = nota ? `
+    <div class="pv-section">
+      <div class="pv-oferta">
+        <div class="pv-oferta-titulo">📌 Nota adicional</div>
+        <div class="pv-oferta-txt">${nota.replace(/\n/g,'<br>')}</div>
+      </div>
+    </div>` : '';
+
+  document.getElementById('propuesta-preview').innerHTML = `
+    <div class="pv-topbar"></div>
+    <div class="pv-header">
+      <div class="pv-header-inner">
+        <div>
+          <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
+            <rect width="42" height="42" rx="10" fill="#132844"/>
+            <path d="M10 21 Q21 8 32 21 Q21 34 10 21Z" fill="none" stroke="#00AEEF" stroke-width="2"/>
+            <circle cx="21" cy="21" r="4.5" fill="#E07B2A"/>
+          </svg>
+        </div>
+        <div>
+          <div class="pv-badge">CONSULTORIO DIGITAL</div>
+          <div class="pv-title">Sistema de <span class="cyan">Captación Digital</span><br>para Profesionales de la Salud</div>
+          <div class="pv-subtitle">Preparado para: <strong>${name}</strong> · ${esp} · ${city}</div>
+        </div>
+      </div>
+      <div class="pv-strip">
+        <div class="pv-strip-item"><div class="pv-strip-dot"></div>Cotización N° ${num}</div>
+        <div class="pv-strip-item"><div class="pv-strip-dot"></div>${fecha}</div>
+        <div class="pv-strip-item"><div class="pv-strip-dot"></div>${plan.nombre}</div>
+      </div>
+    </div>
+    <div class="pv-body">
+      <div class="pv-section">
+        <p class="pv-section-intro">Estimado/a <strong>${name}</strong>, es un placer presentarle esta propuesta de Consultorio Digital, diseñada para transformar su práctica médica con un sistema digital completo de captación y gestión de pacientes.</p>
+      </div>
+      ${whySec}
+      <div class="pv-section">
+        <div class="pv-section-label">Solución propuesta</div>
+        <div class="pv-section-title">${plan.nombre}</div>
+        <div class="pv-incl-title">Incluye:</div>
+        <div class="pv-incluye">${incluyeHTML}</div>
+      </div>
+      ${precioSec}
+      ${flowSec}
+      ${notaSec}
+      <div class="pv-cta">
+        <div class="pv-cta-title">¿Listo para <span class="cyan">digitalizar</span> su consultorio?</div>
+        <div class="pv-cta-sub">Estamos a su disposición para resolver cualquier duda y coordinar el inicio del proyecto.</div>
+        <div class="pv-contacto">
+          <div class="pv-ci"><div class="pv-cl">WhatsApp</div><div class="pv-cv">+593 98 303 1058</div></div>
+          <div class="pv-ci"><div class="pv-cl">Email</div><div class="pv-cv">admin@consultoriodigital.net</div></div>
+          <div class="pv-ci"><div class="pv-cl">Web</div><div class="pv-cv">consultoriodigital.net</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="pv-footer">
+      <svg width="80" height="20" viewBox="0 0 120 28" fill="none">
+        <rect width="28" height="28" rx="6" fill="#132844"/>
+        <path d="M5 14 Q14 4 23 14 Q14 24 5 14Z" fill="none" stroke="#00AEEF" stroke-width="1.8"/>
+        <circle cx="14" cy="14" r="3" fill="#E07B2A"/>
+        <text x="34" y="18" font-family="Plus Jakarta Sans,sans-serif" font-size="11" font-weight="700" fill="#fff">Consultorio Digital</text>
+      </svg>
+      <div class="pv-footer-txt">Mgt. Rommel Mora · RUC: 0103838264001<br>Av. Loja Isabel Landívar 0-11 · Cuenca, Ecuador</div>
+    </div>
+  `;
+}
+
+function exportPDF() {
+  const btn = document.querySelector('.btn-pdf-export');
+  const originalText = btn.innerHTML;
+  btn.innerHTML = '⏳ Generando PDF...';
+  btn.disabled = true;
+  setTimeout(() => {
+    window.print();
+    btn.innerHTML = originalText;
+    btn.disabled = false;
+  }, 300);
+}
+
+// ─── FAQ ───────────────────────────────────────────────────────────
+function toggleFaq(btn) {
+  const item = btn.parentElement;
+  item.classList.toggle('open');
+}
+
+// ─── INIT ──────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('pro-date').value = today;
+  if(document.getElementById('html-date')) document.getElementById('html-date').value = today;
+  document.getElementById('pdf-date').value = today;
+  updatePDF();
+});
+
+// ─── HTML PROPOSAL GENERATOR ──────────────────────────────────────
+function buildHTMLContent() {
+  const name = document.getElementById('html-name').value || 'Dr. [Nombre]';
+  const esp = document.getElementById('html-esp').value || 'Especialidad';
+  const city = document.getElementById('html-city').value || 'Ciudad, Ecuador';
+  const email = document.getElementById('html-email').value || '';
+  const num = document.getElementById('html-num').value || '413';
+  const dateVal = document.getElementById('html-date').value;
+  const planKey = document.getElementById('html-plan').value;
+  const descPrecio = document.getElementById('html-desc').value;
+  const nota = document.getElementById('html-nota').value;
+  const plan = PLANES[planKey];
+  const fecha = dateVal ? new Date(dateVal+'T12:00:00').toLocaleDateString('es-EC',{day:'2-digit',month:'long',year:'numeric'}) : new Date().toLocaleDateString('es-EC',{day:'2-digit',month:'long',year:'numeric'});
+  const precioFinal = descPrecio || plan.precio;
+  const incluyeItems = plan.incluye.map(i => `<li style="display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#F0F7FF;border-radius:8px;border-left:3px solid #00AEEF;font-size:14px;color:#2D3748;line-height:1.5;list-style:none;"><span style="color:#00AEEF;font-weight:700;flex-shrink:0;">✓</span><span>${i}</span></li>`).join('');
+
+  return `<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Propuesta Consultorio Digital — ${name}</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#EEF3FA;color:#2D3748;-webkit-font-smoothing:antialiased}
+.wrap{max-width:680px;margin:0 auto;padding:32px 16px 64px}
+.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.12)}
+.hero{background:linear-gradient(135deg,#0D1B3E 0%,#1a2d5a 100%);padding:36px 32px}
+.logo-row{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.logo-txt{font-size:13px;font-weight:700;color:#00AEEF;letter-spacing:.08em;text-transform:uppercase}
+.badge{display:inline-block;background:#E07B2A;color:#fff;font-size:11px;font-weight:700;padding:3px 12px;border-radius:20px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+h1{font-size:clamp(22px,4vw,30px);font-weight:800;color:#fff;line-height:1.15;margin-bottom:8px}
+h1 span{color:#00AEEF}
+.hero-sub{font-size:13.5px;color:rgba(184,208,244,.85);line-height:1.6}
+.hero-sub strong{color:#fff}
+.meta-strip{background:rgba(255,255,255,.07);border-top:1px solid rgba(255,255,255,.1);padding:12px 32px;display:flex;flex-wrap:wrap;gap:20px}
+.meta-item{display:flex;align-items:center;gap:7px;font-size:12px;color:rgba(184,208,244,.75)}
+.dot{width:5px;height:5px;border-radius:50%;background:#00AEEF;flex-shrink:0}
+.body{padding:32px}
+.section{margin-bottom:28px}
+.sec-lbl{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#E07B2A;margin-bottom:4px}
+h2{font-size:20px;font-weight:800;color:#0D1B3E;margin-bottom:10px}
+.intro{font-size:14px;color:#718096;line-height:1.7}
+.prob-list{list-style:none;display:grid;gap:8px;margin-top:12px}
+.prob-list li{display:flex;align-items:flex-start;gap:12px;background:#FFF8F3;border:1px solid #FDDCC4;border-left:3px solid #E07B2A;border-radius:8px;padding:12px 14px;font-size:13.5px;line-height:1.5}
+.num{font-size:18px;font-weight:800;color:#E07B2A;line-height:1;flex-shrink:0}
+.incl-grid{display:grid;gap:8px;margin-top:10px;list-style:none}
+.precios{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+@media(max-width:480px){.precios{grid-template-columns:1fr}}
+.pc{background:#F0F7FF;border:1px solid #BEE3F8;border-radius:10px;padding:18px}
+.pc.nar{background:#FFF8F3;border-color:#FDDCC4}
+.pc-lbl{font-size:11px;font-weight:600;color:#718096;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.pc-monto{font-size:32px;font-weight:800;color:#0D1B3E;line-height:1}
+.pc-monto small{font-size:18px}
+.pc-nota{font-size:12px;color:#718096;margin-top:4px}
+.pc.nar .pc-monto{color:#E07B2A}
+.flujo{display:grid;gap:10px;margin-top:12px}
+.paso{background:#F7FAFC;border-radius:10px;padding:14px 18px;border-left:3px solid #00AEEF}
+.paso-num{font-size:11px;font-weight:700;color:#00AEEF;letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px}
+.paso-tit{font-size:14px;font-weight:700;color:#0D1B3E;margin-bottom:3px}
+.paso-desc{font-size:13px;color:#718096;line-height:1.5}
+.nota-box{background:#FFF8F3;border:1px solid #FDDCC4;border-radius:10px;padding:16px 20px}
+.nota-tit{font-size:12px;font-weight:700;color:#E07B2A;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.nota-txt{font-size:13.5px;color:#4A5568;line-height:1.6}
+.cta-box{background:linear-gradient(135deg,#0D1B3E,#1a3566);border-radius:12px;padding:28px;text-align:center}
+.cta-tit{font-size:20px;font-weight:800;color:#fff;margin-bottom:8px}
+.cta-tit span{color:#00AEEF}
+.cta-sub{font-size:13.5px;color:rgba(184,208,244,.8);margin-bottom:20px;line-height:1.6}
+.cta-btns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.btn-wa{background:#25D366;color:#fff;font-weight:700;padding:13px 22px;border-radius:8px;text-decoration:none;font-size:14px;display:inline-flex;align-items:center;gap:7px}
+.btn-sec{background:transparent;color:#00AEEF;border:1px solid rgba(0,174,239,.5);font-weight:600;padding:12px 20px;border-radius:8px;text-decoration:none;font-size:13px;display:inline-flex;align-items:center;gap:7px}
+.footer{padding:20px 32px;border-top:1px solid #EDF2F7;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.footer-brand{font-size:12px;font-weight:700;color:#0D1B3E;letter-spacing:.04em}
+.footer-contact{font-size:12px;color:#718096}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="card">
+  <div class="hero">
+    <div class="logo-row">
+      <svg width="36" height="36" viewBox="0 0 42 42" fill="none"><rect width="42" height="42" rx="10" fill="#132844"/><path d="M10 21 Q21 8 32 21 Q21 34 10 21Z" fill="none" stroke="#00AEEF" stroke-width="2"/><circle cx="21" cy="21" r="4.5" fill="#E07B2A"/></svg>
+      <span class="logo-txt">Consultorio Digital</span>
+    </div>
+    <div class="badge">Propuesta Personalizada</div>
+    <h1>Sistema de <span>Captación Digital</span><br>para Profesionales de la Salud</h1>
+    <p class="hero-sub">Preparado para: <strong>${name}</strong> · ${esp} · ${city}</p>
+  </div>
+  <div class="meta-strip">
+    <div class="meta-item"><div class="dot"></div>Cotización N° ${num}</div>
+    <div class="meta-item"><div class="dot"></div>${fecha}</div>
+    <div class="meta-item"><div class="dot"></div>${plan.nombre}</div>
+    ${email ? `<div class="meta-item"><div class="dot"></div>${email}</div>` : ''}
+  </div>
+  <div class="body">
+    <div class="section">
+      <p class="intro">Estimado/a <strong>${name}</strong>, es un gusto presentarle esta propuesta de <strong>Consultorio Digital</strong>, diseñada para transformar su práctica médica con un sistema digital completo de captación y gestión de pacientes.</p>
+    </div>
+    <div class="section">
+      <div class="sec-lbl">Por qué ahora</div>
+      <h2>Los pacientes buscan médicos en internet</h2>
+      <ul class="prob-list">
+        <li><span class="num">1</span><span>Más del <strong>70%</strong> de pacientes busca especialistas en internet antes de llamar</span></li>
+        <li><span class="num">2</span><span>Sin agendamiento online, pierde pacientes que reservan a cualquier hora del día</span></li>
+        <li><span class="num">3</span><span>La competencia ya tiene sistema digital — diferenciarse hoy cuesta menos que recuperar terreno mañana</span></li>
+      </ul>
+    </div>
+    <div class="section">
+      <div class="sec-lbl">Solución propuesta</div>
+      <h2>${plan.nombre}</h2>
+      <ul class="incl-grid">${incluyeItems}</ul>
+    </div>
+    <div class="section">
+      <div class="sec-lbl">Inversión</div>
+      <h2>Propuesta económica</h2>
+      <div class="precios">
+        <div class="pc">
+          <div class="pc-lbl">Inversión inicial</div>
+          <div class="pc-monto"><small>$</small>${precioFinal.replace('$','')}</div>
+          <div class="pc-nota">Pago único · ${plan.tiempo}</div>
+        </div>
+        <div class="pc nar">
+          <div class="pc-lbl">Renovación anual (año 2+)</div>
+          <div class="pc-monto"><small>$</small>${plan.precio_renovacion.replace('$','')}</div>
+          <div class="pc-nota">Hosting, dominio y mantenimiento</div>
+        </div>
+      </div>
+      <p style="font-size:12.5px;color:#718096;margin-top:10px;line-height:1.6"><strong>Forma de pago:</strong> 70% anticipo · 30% contra entrega. Precios válidos por 15 días.</p>
+    </div>
+    <div class="section">
+      <div class="sec-lbl">Proceso</div>
+      <h2>¿Cómo funciona?</h2>
+      <div class="flujo">
+        <div class="paso"><div class="paso-num">Paso 01</div><div class="paso-tit">Aprobación y anticipo</div><div class="paso-desc">Aprueba la propuesta, realiza el 70% de anticipo y entrega la información requerida.</div></div>
+        <div class="paso"><div class="paso-num">Paso 02</div><div class="paso-tit">Implementación</div><div class="paso-desc">Configuramos el sistema completo en ${plan.tiempo}.</div></div>
+        <div class="paso"><div class="paso-num">Paso 03</div><div class="paso-tit">Entrega y activación</div><div class="paso-desc">Revisión final, pago del 30% restante y lanzamiento oficial.</div></div>
+      </div>
+    </div>
+    ${nota ? `<div class="section"><div class="nota-box"><div class="nota-tit">📌 Nota adicional</div><div class="nota-txt">${nota.replace(/\n/g,'<br>')}</div></div></div>` : ''}
+    <div class="cta-box">
+      <div class="cta-tit">¿Listo para <span>digitalizar</span> su consultorio?</div>
+      <div class="cta-sub">Estamos a su disposición para resolver cualquier duda y coordinar el inicio del proyecto.</div>
+      <div class="cta-btns">
+        <a href="https://wa.me/593983031058" target="_blank" class="btn-wa">💬 WhatsApp</a>
+        <a href="mailto:admin@consultoriodigital.net" class="btn-sec">✉ Email</a>
+        <a href="https://consultoriodigital.net" target="_blank" class="btn-sec">🌐 Web</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <span class="footer-brand">CONSULTORIO DIGITAL</span>
+    <span class="footer-contact">+593 98 303 1058 · admin@consultoriodigital.net · Cuenca, Ecuador</span>
+  </div>
+</div>
+</div>
+</body>
+</html>`;
+}
+
+function updateHTML() {
+  if (!document.getElementById('html-name')) return;
+  const content = buildHTMLContent();
+  const num = document.getElementById('html-num').value || '413';
+  document.getElementById('html-cotizacion-label').textContent = 'Cotización #' + num;
+  const frame = document.getElementById('html-preview-frame');
+  if (frame) frame.srcdoc = content;
+}
+
+function downloadHTML() {
+  const name = document.getElementById('html-name').value || 'propuesta';
+  const slug = name.toLowerCase().replace(/[^a-z0-9áéíóúñ]/gi,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
+  const htmlContent = buildHTMLContent();
+  const blob = new Blob([htmlContent], {type:'text/html;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'propuesta-cd-' + slug + '.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+}
+
+function previewHTMLNewTab() {
+  const htmlContent = buildHTMLContent();
+  const blob = new Blob([htmlContent], {type:'text/html;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  window.open(url, '_blank');
+}
+
+</script>
+</body>
+</html>
