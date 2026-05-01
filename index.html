@@ -1187,7 +1187,6 @@ function updateHTML() {
   }
 }
 
-
 function downloadHTML() {
   const name = document.getElementById('html-name').value || 'propuesta';
   const slug = name.toLowerCase().replace(/[^a-z0-9áéíóúñ]/gi,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
@@ -1208,7 +1207,6 @@ function previewHTMLNewTab() {
   const url = URL.createObjectURL(blob);
   window.open(url, '_blank');
 }
-
 </script>
 </body>
 </html>
