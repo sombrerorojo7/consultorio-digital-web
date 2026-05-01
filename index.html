@@ -566,7 +566,7 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem
             </div>
           </div>
           <div class="pdf-sidebar-footer">
-            <button class="btn-pdf-print" onclick="window.print()">🖨 Imprimir / Guardar PDF</button>
+            <button class="btn-pdf-print" onclick="printProposal()">🖨 Imprimir / Guardar PDF</button>
             <button class="btn-pdf-export" onclick="exportPDF()">⬇ Exportar PDF</button>
           </div>
         </div>
@@ -984,15 +984,18 @@ function updatePDF() {
 }
 
 function exportPDF() {
-  const btn = document.querySelector('.btn-pdf-export');
-  const originalText = btn.innerHTML;
-  btn.innerHTML = '⏳ Generando PDF...';
-  btn.disabled = true;
-  setTimeout(() => {
-    window.print();
-    btn.innerHTML = originalText;
-    btn.disabled = false;
-  }, 300);
+  printProposal();
+}
+
+function printProposal() {
+  const preview = document.getElementById('propuesta-preview');
+  if (!preview) return;
+  const styles = Array.from(document.querySelectorAll('style')).map(s => s.textContent).join('\n');
+  const html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><style>' + styles + ' body{margin:0;padding:20px;background:#f0f4fa;} .propuesta{max-width:700px;margin:0 auto;} @media print{body{padding:0;background:#fff;}}</style></head><body><div class="propuesta">' + preview.innerHTML + '</div></body></html>';
+  const newWin = window.open('', '_blank');
+  newWin.document.write(html);
+  newWin.document.close();
+  setTimeout(function(){ newWin.focus(); newWin.print(); }, 700);
 }
 
 // ─── FAQ ───────────────────────────────────────────────────────────
@@ -1009,6 +1012,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('pdf-date').value = today;
   updatePDF();
   generateProposal();
+  updateHTML();
 });
 
 // ─── HTML PROPOSAL GENERATOR ──────────────────────────────────────
