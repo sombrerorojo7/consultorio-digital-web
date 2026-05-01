@@ -627,7 +627,7 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem
             <span id="html-cotizacion-label">Cotización #413</span>
           </div>
           <div style="overflow-y:auto;padding:22px 16px;flex:1;max-height:560px;">
-            <iframe id="html-preview-frame" style="width:100%;height:520px;border:none;border-radius:8px;background:#fff;" sandbox="allow-same-origin allow-scripts"></iframe>
+            <iframe id="html-preview-frame" style="width:100%;height:520px;border:none;border-radius:8px;background:#fff;></iframe>
           </div>
         </div>
       </div>
@@ -1181,7 +1181,9 @@ function updateHTML() {
   const num = document.getElementById('html-num').value || '413';
   document.getElementById('html-cotizacion-label').textContent = 'Cotización #' + num;
   const frame = document.getElementById('html-preview-frame');
-  if (frame) frame.srcdoc = content;
+  if (frame) {
+  const blob = new Blob([content], {type:'text/html'});
+  frame.src = URL.createObjectURL(blob);
 }
 
 function downloadHTML() {
