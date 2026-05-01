@@ -1182,8 +1182,8 @@ function updateHTML() {
   document.getElementById('html-cotizacion-label').textContent = 'Cotización #' + num;
   const frame = document.getElementById('html-preview-frame');
   if (frame) {
-  const blob = new Blob([content], {type:'text/html'});
-  frame.src = URL.createObjectURL(blob);
+    const blob = new Blob([content], {type:'text/html'});
+    frame.src = URL.createObjectURL(blob);
   }
 }
 
