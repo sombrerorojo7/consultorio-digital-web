@@ -566,7 +566,7 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem
             </div>
           </div>
           <div class="pdf-sidebar-footer">
-            <button class="btn-pdf-print" onclick="printProposal()">🖨 Imprimir / Guardar PDF</button>
+            <button class="btn-pdf-print" onclick="printProposal()">🖸 Imprimir / Guardar PDF</button>
             <button class="btn-pdf-export" onclick="exportPDF()">⬇ Exportar PDF</button>
           </div>
         </div>
@@ -627,7 +627,7 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem
             <span id="html-cotizacion-label">Cotización #413</span>
           </div>
           <div style="overflow-y:auto;padding:22px 16px;flex:1;max-height:560px;">
-            <iframe id="html-preview-frame" style="width:100%;height:520px;border:none;border-radius:8px;background:#fff;></iframe>
+            <iframe id="html-preview-frame" style="width:100%;height:520px;border:none;border-radius:8px;background:#fff;"></iframe>
           </div>
         </div>
       </div>
@@ -668,7 +668,7 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem
   <div class="wrap">
     <h2 class="cta-title">¿Listo para digitalizar tu consultorio?</h2>
     <p class="cta-sub">Conversemos por WhatsApp. Te explicamos cuál plan se adapta mejor a tu situación.</p>
-    <button class="btn-wa-main" onclick="window.open('https://wa.me/593983031058?text=Hola%2C+quiero+información+sobre+Consultorio+Digital','_blank')">
+    <button class="btn-wa-main" onclick="window.open('https://wa.me/593983031058?text=Hola%2C+quiero+informaci%C3%B3n+sobre+Consultorio+Digital','_blank')">
       💬 Escribir por WhatsApp
     </button>
   </div>
@@ -687,7 +687,7 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem
 </footer>
 
 <script>
-// ─── DATOS DE PLANES ───────────────────────────────────────────────
+// ─── DATOS DE PLANES ────────────────────────────────────────────────────
 const PLANES = {
   captacion: {
     nombre: 'Plan Captación Digital',
@@ -769,7 +769,7 @@ const PLANES = {
   }
 };
 
-// ─── TAB SWITCHING ─────────────────────────────────────────────────
+// ─── TAB SWITCHING ─────────────────────────────────────────────────────
 function switchTab(tab) {
   ['wa','pdf','html'].forEach(t => {
     document.getElementById('panel-'+t).classList.toggle('hidden', tab !== t);
@@ -779,7 +779,7 @@ function switchTab(tab) {
   if (tab === 'html') { updateHTML(); }
 }
 
-// ─── WHATSAPP GENERATOR ─────────────────────────────────────────────
+// ─── WHATSAPP GENERATOR ───────────────────────────────────────────────────
 function generateProposal() {
   const name = document.getElementById('pro-name').value.trim();
   const esp = document.getElementById('pro-esp').value.trim();
@@ -853,7 +853,7 @@ function selectPlan(planKey) {
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-// ─── PDF PREVIEW ───────────────────────────────────────────────────
+// ─── PDF PREVIEW ───────────────────────────────────────────────────────────────────────
 function updatePDF() {
   const name = document.getElementById('pdf-name').value || 'Dr. [Nombre]';
   const esp = document.getElementById('pdf-esp').value || 'Especialidad';
@@ -998,13 +998,13 @@ function printProposal() {
   setTimeout(function(){ newWin.focus(); newWin.print(); }, 700);
 }
 
-// ─── FAQ ───────────────────────────────────────────────────────────
+// ─── FAQ ────────────────────────────────────────────────────────────────────
 function toggleFaq(btn) {
   const item = btn.parentElement;
   item.classList.toggle('open');
 }
 
-// ─── INIT ──────────────────────────────────────────────────────────
+// ─── INIT ──────────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function() {
   const today = new Date().toISOString().split('T')[0];
   document.getElementById('pro-date').value = today;
@@ -1015,7 +1015,7 @@ document.addEventListener('DOMContentLoaded', function() {
   updateHTML();
 });
 
-// ─── HTML PROPOSAL GENERATOR ──────────────────────────────────────
+// ─── HTML PROPOSAL GENERATOR ────────────────────────────────────────────────────
 function buildHTMLContent() {
   const name = document.getElementById('html-name').value || 'Dr. [Nombre]';
   const esp = document.getElementById('html-esp').value || 'Especialidad';
