@@ -566,7 +566,7 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem
             </div>
           </div>
           <div class="pdf-sidebar-footer">
-            <button class="btn-pdf-print" onclick="printProposal()">🖸 Imprimir / Guardar PDF</button>
+            <button class="btn-pdf-print" onclick="printProposal()">🖨 Imprimir / Guardar PDF</button>
             <button class="btn-pdf-export" onclick="exportPDF()">⬇ Exportar PDF</button>
           </div>
         </div>
@@ -614,6 +614,21 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem
               </div>
               <div class="pdf-field"><label>Precio especial (opcional)</label><input type="text" id="html-desc" placeholder="Ej: $650 promo" oninput="updateHTML()"></div>
               <div class="pdf-field"><label>Nota adicional</label><textarea id="html-nota" rows="3" placeholder="Ej: Incluye soporte 30 días..." oninput="updateHTML()"></textarea></div>
+            </div>
+            <div class="pdf-field-group">
+              <div class="pdf-field-group-title">Opciones</div>
+              <div class="pdf-toggle-row">
+                <span class="pdf-toggle-label">Mostrar precios</span>
+                <label class="pdf-toggle"><input type="checkbox" id="html-show-prices" checked onchange="updateHTML()"><span class="pdf-toggle-slider"></span></label>
+              </div>
+              <div class="pdf-toggle-row">
+                <span class="pdf-toggle-label">Mostrar "¿Por qué ahora?"</span>
+                <label class="pdf-toggle"><input type="checkbox" id="html-show-why" checked onchange="updateHTML()"><span class="pdf-toggle-slider"></span></label>
+              </div>
+              <div class="pdf-toggle-row">
+                <span class="pdf-toggle-label">Mostrar flujo de trabajo</span>
+                <label class="pdf-toggle"><input type="checkbox" id="html-show-flow" checked onchange="updateHTML()"><span class="pdf-toggle-slider"></span></label>
+              </div>
             </div>
           </div>
           <div class="pdf-sidebar-footer">
@@ -668,7 +683,7 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem
   <div class="wrap">
     <h2 class="cta-title">¿Listo para digitalizar tu consultorio?</h2>
     <p class="cta-sub">Conversemos por WhatsApp. Te explicamos cuál plan se adapta mejor a tu situación.</p>
-    <button class="btn-wa-main" onclick="window.open('https://wa.me/593983031058?text=Hola%2C+quiero+informaci%C3%B3n+sobre+Consultorio+Digital','_blank')">
+    <button class="btn-wa-main" onclick="window.open('https://wa.me/593983031058?text=Hola%2C+quiero+información+sobre+Consultorio+Digital','_blank')">
       💬 Escribir por WhatsApp
     </button>
   </div>
@@ -687,7 +702,7 @@ footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem
 </footer>
 
 <script>
-// ─── DATOS DE PLANES ────────────────────────────────────────────────────
+// ─── DATOS DE PLANES ───────────────────────────────────────────────
 const PLANES = {
   captacion: {
     nombre: 'Plan Captación Digital',
@@ -769,7 +784,7 @@ const PLANES = {
   }
 };
 
-// ─── TAB SWITCHING ─────────────────────────────────────────────────────
+// ─── TAB SWITCHING ─────────────────────────────────────────────────
 function switchTab(tab) {
   ['wa','pdf','html'].forEach(t => {
     document.getElementById('panel-'+t).classList.toggle('hidden', tab !== t);
@@ -779,7 +794,7 @@ function switchTab(tab) {
   if (tab === 'html') { updateHTML(); }
 }
 
-// ─── WHATSAPP GENERATOR ───────────────────────────────────────────────────
+// ─── WHATSAPP GENERATOR ─────────────────────────────────────────────
 function generateProposal() {
   const name = document.getElementById('pro-name').value.trim();
   const esp = document.getElementById('pro-esp').value.trim();
@@ -853,7 +868,7 @@ function selectPlan(planKey) {
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-// ─── PDF PREVIEW ───────────────────────────────────────────────────────────────────────
+// ─── PDF PREVIEW ───────────────────────────────────────────────────
 function updatePDF() {
   const name = document.getElementById('pdf-name').value || 'Dr. [Nombre]';
   const esp = document.getElementById('pdf-esp').value || 'Especialidad';
@@ -998,13 +1013,13 @@ function printProposal() {
   setTimeout(function(){ newWin.focus(); newWin.print(); }, 700);
 }
 
-// ─── FAQ ────────────────────────────────────────────────────────────────────
+// ─── FAQ ───────────────────────────────────────────────────────────
 function toggleFaq(btn) {
   const item = btn.parentElement;
   item.classList.toggle('open');
 }
 
-// ─── INIT ──────────────────────────────────────────────────────────────────────────
+// ─── INIT ──────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function() {
   const today = new Date().toISOString().split('T')[0];
   document.getElementById('pro-date').value = today;
@@ -1015,7 +1030,7 @@ document.addEventListener('DOMContentLoaded', function() {
   updateHTML();
 });
 
-// ─── HTML PROPOSAL GENERATOR ────────────────────────────────────────────────────
+// ─── HTML PROPOSAL GENERATOR ──────────────────────────────────────
 function buildHTMLContent() {
   const name = document.getElementById('html-name').value || 'Dr. [Nombre]';
   const esp = document.getElementById('html-esp').value || 'Especialidad';
@@ -1026,6 +1041,9 @@ function buildHTMLContent() {
   const planKey = document.getElementById('html-plan').value;
   const descPrecio = document.getElementById('html-desc').value;
   const nota = document.getElementById('html-nota').value;
+  const showPrices = document.getElementById('html-show-prices') ? document.getElementById('html-show-prices').checked : true;
+  const showWhy = document.getElementById('html-show-why') ? document.getElementById('html-show-why').checked : true;
+  const showFlow = document.getElementById('html-show-flow') ? document.getElementById('html-show-flow').checked : true;
   const plan = PLANES[planKey];
   const fecha = dateVal ? new Date(dateVal+'T12:00:00').toLocaleDateString('es-EC',{day:'2-digit',month:'long',year:'numeric'}) : new Date().toLocaleDateString('es-EC',{day:'2-digit',month:'long',year:'numeric'});
   const precioFinal = descPrecio || plan.precio;
@@ -1114,7 +1132,7 @@ h2{font-size:20px;font-weight:800;color:#0D1B3E;margin-bottom:10px}
     <div class="section">
       <p class="intro">Estimado/a <strong>${name}</strong>, es un gusto presentarle esta propuesta de <strong>Consultorio Digital</strong>, diseñada para transformar su práctica médica con un sistema digital completo de captación y gestión de pacientes.</p>
     </div>
-    <div class="section">
+    ${showWhy ? `<div class="section">
       <div class="sec-lbl">Por qué ahora</div>
       <h2>Los pacientes buscan médicos en internet</h2>
       <ul class="prob-list">
@@ -1122,13 +1140,13 @@ h2{font-size:20px;font-weight:800;color:#0D1B3E;margin-bottom:10px}
         <li><span class="num">2</span><span>Sin agendamiento online, pierde pacientes que reservan a cualquier hora del día</span></li>
         <li><span class="num">3</span><span>La competencia ya tiene sistema digital — diferenciarse hoy cuesta menos que recuperar terreno mañana</span></li>
       </ul>
-    </div>
+    </div>` : ''}
     <div class="section">
       <div class="sec-lbl">Solución propuesta</div>
       <h2>${plan.nombre}</h2>
       <ul class="incl-grid">${incluyeItems}</ul>
     </div>
-    <div class="section">
+    ${showPrices ? `<div class="section">
       <div class="sec-lbl">Inversión</div>
       <h2>Propuesta económica</h2>
       <div class="precios">
@@ -1144,8 +1162,8 @@ h2{font-size:20px;font-weight:800;color:#0D1B3E;margin-bottom:10px}
         </div>
       </div>
       <p style="font-size:12.5px;color:#718096;margin-top:10px;line-height:1.6"><strong>Forma de pago:</strong> 70% anticipo · 30% contra entrega. Precios válidos por 15 días.</p>
-    </div>
-    <div class="section">
+    </div>` : ''}
+    ${showFlow ? `<div class="section">
       <div class="sec-lbl">Proceso</div>
       <h2>¿Cómo funciona?</h2>
       <div class="flujo">
@@ -1153,7 +1171,7 @@ h2{font-size:20px;font-weight:800;color:#0D1B3E;margin-bottom:10px}
         <div class="paso"><div class="paso-num">Paso 02</div><div class="paso-tit">Implementación</div><div class="paso-desc">Configuramos el sistema completo en ${plan.tiempo}.</div></div>
         <div class="paso"><div class="paso-num">Paso 03</div><div class="paso-tit">Entrega y activación</div><div class="paso-desc">Revisión final, pago del 30% restante y lanzamiento oficial.</div></div>
       </div>
-    </div>
+    </div>` : ''}
     ${nota ? `<div class="section"><div class="nota-box"><div class="nota-tit">Nota adicional</div><div class="nota-txt">${nota.replace(/\n/g,'<br>')}</div></div></div>` : ''}
     <div class="cta-box">
       <div class="cta-tit">¿Listo para <span>digitalizar</span> su consultorio?</div>
