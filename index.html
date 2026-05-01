@@ -801,20 +801,20 @@ function generateProposal() {
   msg += `\n\n`;
   msg += `Es un gusto saludarle. A continuación le presento la propuesta de *Consultorio Digital* preparada especialmente para su práctica${city ? ' en ' + city : ''}.`;
   msg += `\n\n`;
-  msg += `📋 *PROPUESTA: ${plan.nombre.toUpperCase()}*\n`;
-  msg += `📅 Fecha: ${fecha}\n`;
+  msg += `*PROPUESTA: ${plan.nombre.toUpperCase()}*\n`;
+  msg += `Fecha: ${fecha}\n`;
   msg += `\n`;
-  msg += `💰 *Inversión: ${plan.precio}* (pago único)\n`;
-  msg += `🔄 Renovación año 2+: ${plan.renovacion} (hosting, dominio y mantenimiento)\n`;
-  msg += `⏱ Tiempo de implementación: ${plan.tiempo}\n`;
+  msg += `*Inversión: ${plan.precio}* (pago único)\n`;
+  msg += `Renovación año 2+: ${plan.renovacion} (hosting, dominio y mantenimiento)\n`;
+  msg += `Tiempo de implementación: ${plan.tiempo}\n`;
   msg += `\n`;
-  msg += `✅ *INCLUYE:*\n`;
+  msg += `*INCLUYE:*\n`;
   plan.incluye.forEach(item => { msg += `• ${item}\n`; });
   if (obs) {
-    msg += `\n📌 *Nota adicional:*\n${obs}\n`;
+    msg += `\n*Nota adicional:*\n${obs}\n`;
   }
   msg += `\n`;
-  msg += `💳 *Forma de pago:*\n`;
+  msg += `*Forma de pago:*\n`;
   msg += `• 70% de anticipo al inicio del proyecto\n`;
   msg += `• 30% contra entrega\n`;
   msg += `\n`;
@@ -1008,6 +1008,7 @@ document.addEventListener('DOMContentLoaded', function() {
   if(document.getElementById('html-date')) document.getElementById('html-date').value = today;
   document.getElementById('pdf-date').value = today;
   updatePDF();
+  generateProposal();
 });
 
 // ─── HTML PROPOSAL GENERATOR ──────────────────────────────────────
@@ -1085,7 +1086,7 @@ h2{font-size:20px;font-weight:800;color:#0D1B3E;margin-bottom:10px}
 .footer{padding:20px 32px;border-top:1px solid #EDF2F7;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
 .footer-brand{font-size:12px;font-weight:700;color:#0D1B3E;letter-spacing:.04em}
 .footer-contact{font-size:12px;color:#718096}
-</style>
+<\/style>
 </head>
 <body>
 <div class="wrap">
@@ -1202,4 +1203,3 @@ function previewHTMLNewTab() {
 
 </script>
 </body>
-</html>
